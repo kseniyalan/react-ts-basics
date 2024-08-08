@@ -27,18 +27,27 @@ type CourseGoalProps = {
 //This is because React automatically adds the key prop to all components that are part of a list.
 
 // The PropsWithChildren type is a generic type that allows you to define a component's props with children.
-type CourseGoalProps = PropsWithChildren<{ title: string }>;
+type CourseGoalProps = PropsWithChildren<{
+    id: number; 
+    title: string;
+    onDelete: (goalId: number) => void;
+}>;
 
 
 // One way to write a functional component
-export default function CourseGoal({ title, children }: CourseGoalProps) { 
+export default function CourseGoal({ id, title, onDelete, children }: CourseGoalProps) { 
     return (
         <article>
             <div>
                 <h2>{title}</h2>
                 {children}
             </div>
-            <button type="button">Delete</button>
+            <button
+                type="button"
+                onClick={() => onDelete(id)}
+            >
+                Delete
+            </button>
         </article>
     );
 }
