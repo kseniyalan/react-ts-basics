@@ -1,11 +1,27 @@
-import { type FormEvent } from 'react';  
+import { type FormEvent, useRef } from 'react'; 
 
-export default function NewGoal() {
+type NewGoalProps = {
+    onAddGoal: (goal: string, summary: string) => void; 
+}; 
+
+export default function NewGoal({ onAddGoal }: NewGoalProps) {
+
+    const goalRef = useRef<HTMLInputElement>(null);
+    const summaryRef = useRef<HTMLInputElement>(null);
 
     function handleSubmitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         //One of the ways to get the form data 
         //const data = new FormData(event.currentTarget);
+
+        const goalValue = goalRef.current!.value;
+        const summaryValue = summaryRef.current!.value;
+
+        if (goalValue.trim().length === 0 || summaryValue.trim().length === 0) {
+            return;
+        }
+
+        onAddGoal(goalValue, summaryValue); 
 
     }
 
@@ -16,15 +32,15 @@ export default function NewGoal() {
                 <input
                     id="goalInput"
                     type="text"
-                    name="goal"
+                    ref={goalRef}
                 />
             </p>
             <p>
-                <label htmlFor="descriptionInput">Goal Description</label>
+                <label htmlFor="summaryInput">Goal Summary</label>
                 <input
-                    id="descriptionInput"
+                    id="summaryInput"
                     type="text"
-                    name="description"
+                    ref={summaryRef}
                 />
             </p>
             <p>

@@ -14,12 +14,12 @@ export default function App() {
   // type never[] is an array of unknown type
   const [courseGoals, setCourseGoals] = useState<CourseGoalType[]>([]);
 
-  function handleAddGoal() {
+  function handleAddGoal(goalTitle: string, goalDescription: string) {
     setCourseGoals((prevCourseGoals) => {
       const newGoal: CourseGoalType = {
         id: Math.random(),
-        title: 'Learn React with TS',
-        description: 'Learn it from the very ground up!',
+        title: goalTitle,
+        description: goalDescription,
       };
       return [...prevCourseGoals, newGoal];
     });
